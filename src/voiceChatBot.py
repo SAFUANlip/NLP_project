@@ -7,7 +7,7 @@ import whisper
 import sounddevice as sd
 from queue import Queue
 from rich.console import Console
-import langchain
+
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain
 from langchain.prompts import PromptTemplate
@@ -29,12 +29,12 @@ tts = TextToSpeechService()
 template = """
     You are a helpful and friendly AI assistant. You are polite, respectful, and aim to provide concise responses of less 
     than 20 words.
-    
+
     The conversation transcript is as follows:
     {history}
-    
+
     And here is the user's follow-up: {input}
-    
+
     Your response:
 """
 PROMPT = PromptTemplate(input_variables=["history", "input"], template=template)
@@ -82,13 +82,14 @@ def record_audio(stop_event, data_queue):
     Returns:
         None
     """
+
     def callback(indata, frames, time, status):
         if status:
             console.print(status)
         data_queue.put(bytes(indata))
 
     with sd.RawInputStream(
-        samplerate=16000, dtype="int16", channels=1, callback=callback
+            samplerate=16000, dtype="int16", channels=1, callback=callback
     ):
         while not stop_event.is_set():
             time.sleep(0.1)
@@ -121,7 +122,7 @@ def get_llm_response(text: str) -> str:
     """
     response = chain.predict(input=text)
     if response.startswith("Assistant:"):
-        response = response[len("Assistant:") :].strip()
+        response = response[len("Assistant:"):].strip()
     return response
 
 
@@ -172,7 +173,7 @@ def get_context_embeddings(dataset) -> FAISS:
 
 
 if __name__ == "__main__":
-    ds = load_dataset("neural-bridge/rag-dataset-12000")['test'] # computing embeddings for train too heavy
+    ds = load_dataset("neural-bridge/rag-dataset-12000")['test']  # computing embeddings for train too heavy
 
     console.print("[cyan]Assistant starting...")
 
@@ -204,7 +205,7 @@ if __name__ == "__main__":
 
             audio_data = b"".join(list(data_queue.queue))
             audio_np = (
-                np.frombuffer(audio_data, dtype=np.int16).astype(np.float32) / 32768.0
+                    np.frombuffer(audio_data, dtype=np.int16).astype(np.float32) / 32768.0
             )
 
             if audio_np.size > 0:
