@@ -1,5 +1,5 @@
 .ipynb*
 *.idea
 poetry.lock
-src/__pycache*
+*__pycache*
 pyaudio-0.2.14-cp312-cp312-macosx_10_9_universal2.whl
