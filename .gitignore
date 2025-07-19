@@ -2,4 +2,4 @@
 *.idea
 poetry.lock
 *__pycache__*
-pyaudio-0.2.14-cp312-cp312-macosx_10_9_universal2.whl
+audio/pyaudio-0.2.14-cp312-cp312-macosx_10_9_universal2.whl
