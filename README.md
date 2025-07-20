@@ -1,4 +1,4 @@
-# 📚 RAG-Based NLP Pipeline with Evaluation and Voice Assistant
+# 📚 RAG (Retrieval-Augmented Generation) - Based NLP Pipeline with Evaluation and Voice Assistant
 
 ## ☁️ Cloud Group Members
 - [Safuan IUSUPOV](www.linkedin.com/in/safuan-iusupov-484084337)
