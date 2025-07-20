@@ -1,78 +1,149 @@
-# NLP project
+# 📚 RAG-Based NLP Pipeline with Evaluation and Voice Assistant
 
-# ☁️ Cloud group members:
-- Safuan IUSUPOV
-- Shodai FUJIMOTO
-- Dorsa MOTIALLAH
-- Darkhan ISLAM
-- Hadjer BRIOUA 
+## ☁️ Cloud Group Members
+- [Safuan IUSUPOV](www.linkedin.com/in/safuan-iusupov-484084337)
+- Shodai FUJIMOTO  
+- [Dorsa MOTIALLAH](https://www.linkedin.com/in/dorsa-motiallah-236444188?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
+- [Darkhan ISLAM](https://www.linkedin.com/in/dmazhi/)
+- [Hadjer BRIOUA](https://www.linkedin.com/in/hadjer-b-6265b3211?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
 
-# Project Summary
+---
 
-1.   📚 Retrieval-Augmented Generation (RAG) Dataset 12000
-2.   📗 Embedding Analysis Overview (Word2Vec)
-3.   📕 Semantic analysis of dataset (by Sentence Transformer)
-4.   📙 Semantic analysis (by LLM embeddings)
-5.   🤖 Classical NLP approach
-6.   📐 RAG Metrics
-7.   🧾 Prompt Engineering with Gemini 2.0 Flash
-8.   🚂 LLMs in RAG and their Fine-Tuning
-9.   📘 Summarization Model with LoRA and PEFT using FLAN-T5
-10.  🎙️ Voice Interactive Chatbot (Offline LLM + Contextual RAG) 🦙
+# 🎞 [VIDEO presentation of project](https://drive.google.com/file/d/1ZGzyo7bupjO7vRZbzOZn4nuerszCkxWu/view?usp=sharing)
 
-# 📚 [Retrieval-Augmented Generation (RAG) Dataset 12000](https://huggingface.co/datasets/neural-bridge/rag-dataset-12000)
+---
 
-Retrieval-Augmented Generation (RAG) Dataset 12000 is an English dataset designed for RAG-optimized models, built by [Neural Bridge AI](https://www.neuralbridge.ai/), and released under [Apache license 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
+## 🧠 Project Overview
 
-## Dataset Description
+This project explores a full NLP pipeline built around **Retrieval-Augmented Generation (RAG)**.  
+It combines classical NLP and deep learning techniques to analyze, evaluate, and enhance language models.  
+The project culminates in a fully **local voice-interactive assistant** powered by a context-aware RAG system.
 
+---
 
-### Dataset Summary
+## 🗂️ Key Components
 
-Retrieval-Augmented Generation (RAG) enhances large language models (LLMs) by allowing them to consult an external authoritative knowledge base before generating responses. This approach significantly boosts the models' ability to produce relevant, accurate, and context-specific output by extending their capabilities to specialized domains or an organization's internal data, without the need for retraining. RAG offers a cost-effective method to leverage the vast data processing power of LLMs, equipped with billions of parameters, for tasks such as question-answering, language translation, and sentence completion, ensuring that the output is always up-to-date and applicable to various contexts.
+### 1. RAG Dataset (12,000 samples)
+- Structured as `(context, question, answer)`
+- Built for optimizing retrieval-based generation
+- Source: [Neural Bridge AI](https://huggingface.co/datasets/neural-bridge/rag-dataset-12000)
 
-RAG's importance lies in its potential to address the inherent challenges of LLMs, such as unpredictability in responses, reliance on static and potentially outdated training data, and the risk of disseminating incorrect or non-authoritative information. These issues can negatively affect user trust in AI-powered applications, making RAG's ability to guide LLMs toward authoritative sources for information retrieval invaluable.
+---
 
-RAG has multiple benefits, including cost-effective implementation and maintenance, access to current information, improved user trust through accurate information and source attribution, and greater control for developers over the information retrieval process. This approach allows for the dynamic updating of LLMs with the latest research, statistics, or news, directly addressing the challenges of maintaining relevancy and accuracy in rapidly changing knowledge landscapes. Additionally, it empowers organizations to deploy generative AI more confidently across a wider range of applications, enhancing both the user experience and the reliability of AI-driven interactions.
+### 2. Embedding & Semantic Analysis
+- Word2Vec trained on raw and POS-tagged text
+- Visualized with **t-SNE**
+- Clustered with **K-Means**
+- POS-tagging improved syntactic granularity
 
-Retrieval-Augmented Generation (RAG) Dataset 12000 dataset is a triple-feature collection, with each entry containing a "context", "question", and "answer" fields, designed to help build RAG-optimized models. This data consists of 12000 entries, and the context data is from [Falcon RefinedWeb](https://huggingface.co/datasets/tiiuae/falcon-refinedweb).
+---
 
-### Dataset Structure
+### 3. Semantic Similarity
+- Cosine similarity between context, question, and answer
+- Findings:
+  - Answers are semantically closer to context
+  - Questions tend to be more abstract and diverse
 
-- **Languages**: English (`en`)
-- **Size**: 12,000 entries
-- **Splits**:
-  - Train: 9,600 examples
-  - Test: 2,400 examples
-- **Fields**:
-  - `context`: A string consisting of a range of tokens.
-  - `question`: A string consisting of a question related to the context.
-  - `answer`: A string consisting of an answer for the question.
+---
 
-Each data point comprises a context obtained from Falcon RefinedWeb, a question about the context, and an answer for the question. The question and answer for each data point are generated by GPT-4.
+### 4. Sentence Transformers vs Word2Vec
+- Sentence Transformers (`all-MiniLM-L6-v2`) captured deeper meaning
+- Better separation in clustering and visualization
+- More accurate semantic similarity
 
-# 📗 Embedding Analysis Overview (Word2Vec)
+![CosineSimilarity](images/CosineSimilarities.png)
 
-This notebook explores various techniques for analyzing textual data through word embeddings. The key components include:
+---
 
-- **Word2Vec**: To generate vector representations of words based on their context.
-- **t-SNE**: For dimensionality reduction and visualization of high-dimensional embeddings in 2D space.
-- **Cosine Similarity**: To measure the semantic similarity between `context`, `question`, and `answer` fields.
-- **K-Means Clustering**: To group semantically similar text samples based on their embeddings.
+### 5. Classical Retrieval Methods
+- **TF-IDF** and **BM25** used for context retrieval
+- Top-1 accuracy: ~5%
+- Conclusion: classical retrieval alone is insufficient for open-domain QA
 
-The goal is to understand semantic patterns in the dataset by embedding, comparing, and clustering natural language components.
+---
 
-## Data Preprocessing
+### 6. RAG Evaluation Metrics
+![Mertics](images/Metrics.jpg)
+- **Faithfulness** – factual alignment with the context
+![Faithfulness](images/Faithfulness.jpg)
+- **Answer Relevance** – semantic alignment with the question
+![Answer Relevance](images/AnswerRelevance.jpg)
+- Other metrics: BLEU, ROUGE, Levenshtein, Cosine Similarity
 
-To prepare the text data for embedding, we apply several preprocessing steps:
+---
 
-- **Email and URL removal**: Strip out any email addresses and hyperlinks using regular expressions.
-- **Punctuation removal**: Clean text from punctuation symbols.
-- **Lowercasing**: Standardize all text to lowercase for consistency.
-- **Tokenization**: Split text into individual words using NLTK's `RegexpTokenizer`.
-- **Stopword removal**: Eliminate common English stopwords (e.g., "the", "and", "is") using NLTK.
-- **Missing value removal**: Drop rows that contain missing (`NaN`) entries to ensure data integrity.
+### 7. Prompt Engineering with Gemini 2.0 Flash
+- Strategies tested: **Zero-Shot**, **One-Shot**, **Few-Shot**
+- One-shot prompting significantly improved output quality and structure
 
-These transformations are applied to the `context`, `question`, and `answer` fields of the dataset.
+---
 
+### 8. LLM Fine-Tuning with LoRA + PEFT
+- Model: `google/flan-t5-base`
+- Fine-tuned to generate summaries (answers) from context + question
+- Used **Low-Rank Adaptation (LoRA)** for efficient parameter updates
+- Lightweight and suitable for modest hardware
 
+---
+
+### 9. Model Evaluation Summary
+
+| Model                  | Faithfulness | Relevance | BLEU  | ROUGE | Notes                                  |
+|------------------------|--------------|-----------|-------|--------|----------------------------------------|
+| Gemini 2 (base)        | High         | High      | Low   | Low    | Lacks answer formatting                |
+| Gemini 2 (1-shot)      | High         | High      | High  | High   | Formatting improved with example       |
+| Gemini 2 (few-shot)    | ≈ One-shot   | ≈ One-shot| ≈ One-shot| ≈ One-shot| No added benefit over one-shot         |
+| Gemma 2 (base)         | Low          | Low       | Low   | Low    | Poor out-of-the-box performance        |
+| Gemma 2 (fine-tuned)   | High         | High      | High  | High   | Strong improvement with fine-tuning    |
+| LLaMA 3.2 (base)       | Medium–High  | High      | Medium| Medium | Solid performance without fine-tuning  |
+| LLaMA 3.2 (fine-tuned) | High         | High      | High  | High   | Best overall results                   |
+
+![MetricsComparison](images/MetricsComparison.jpg)
+
+---
+
+### 10. 🎙️ Voice-Interactive Assistant (Offline RAG)
+
+#### 🔧 Features
+- Fully offline (no external APIs)
+- Microphone input + local speech-to-text (Whisper)
+- Local LLM via [Ollama](https://ollama.com)
+- Context retrieval using FAISS + embeddings
+- Local speech output (Bark TTS)
+
+#### 🛠 Requirements
+- Python 3.11
+- Ollama + `llama3.2:1b`
+- Packages: `langchain`, `transformers`, `faiss-cpu`, `openai-whisper`, `scikit-learn`, `rich`, etc.
+
+```bash
+pip install langchain langchain-core transformers faiss-cpu openai-whisper scikit-learn rich
+```
+
+✅ Key Takeaways
+-	RAG enhances LLMs by providing external knowledge and increasing factual correctness.
+-	Sentence Transformers outperform traditional embeddings in capturing deep semantics.
+-	Prompting techniques like one-shot significantly improve generation quality.
+-	Fine-tuning with LoRA offers a lightweight and efficient way to adapt LLMs.
+-	Voice-based RAG assistants are feasible and powerful even without cloud APIs.
+
+📁 Repository Structure
+```
+├── README.md
+├── images/                        # images with some results and examples
+├── pyproject.toml/                # configuration for ChatBot
+├── notebooks/ 
+│   ├── individual
+│   └── Cloud_final_notebook.ipynb # All result presented here
+├── LLM_results/
+├── audio/
+├── src/                   
+│   ├── tts.py
+│   └── voiceChatBot.py            # To run VoiceInteractive ChatBot
+└── word2vec_models/
+```
+
+📌 License & Credits
+- Dataset: [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html)
+- Model: Hugging Face Transformers & Vertex AI
+- Project inspired by work from [Neural Bridge AI](https://www.neuralbridge.ai/)
